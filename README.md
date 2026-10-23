@@ -1,16 +1,59 @@
-# doku
+# DOKU — Dompet Saku
 
-A new Flutter project.
+Aplikasi Android pencatat keuangan harian: catat pemasukan & pengeluaran,
+kelola kategori, lihat laporan mingguan/bulanan/tahunan lengkap dengan grafik,
+serta ekspor/impor Excel. Semua data disimpan lokal di perangkat (SQLite).
 
-## Getting Started
+## Teknologi
 
-This project is a starting point for a Flutter application.
+- Flutter 3.47 / Dart 3.13 (Material 3, mode terang & gelap)
+- Android saja (`com.caraguna.dompet_apps`), Gradle Kotlin DSL
+- `sqflite` untuk database lokal, `fl_chart` untuk grafik,
+  `excel_community` + `file_picker` untuk ekspor/impor,
+  `google_mobile_ads` untuk iklan
 
-A few resources to get you started if this is your first Flutter project:
+## Struktur
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```
+lib/
+  core/        tema, konstanta (AdMob, tautan), utilitas format & tanggal, widget bersama
+  data/        database, model, repository, layanan (Excel, iklan, preferensi)
+  features/    dashboard, transaksi, laporan, kategori, impor/ekspor, onboarding, lainnya
+test/          unit test, test migrasi database, dan widget test
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Menjalankan
+
+```bash
+flutter pub get
+flutter run
+flutter analyze
+flutter test
+```
+
+## Build rilis
+
+Buat `android/key.properties` (tidak di-commit) yang menunjuk ke keystore upload:
+
+```properties
+storePassword=...
+keyPassword=...
+keyAlias=...
+storeFile=/path/ke/keystore.jks
+```
+
+Lalu jalankan:
+
+```bash
+flutter build appbundle --release
+```
+
+Tanpa `key.properties`, build rilis memakai debug key (hanya untuk uji lokal).
+
+## Catatan kompatibilitas
+
+- Nama file database (`doku.db`), skema tabel, dan kunci SharedPreferences tetap
+  sama seperti versi sebelumnya, sehingga data pengguna lama tetap terbaca.
+  Database dinaikkan ke versi 2 (menambah index dan merapikan format tanggal
+  hasil impor lama).
+- File Excel memakai kolom: `Tanggal | Keterangan | Kategori | Jenis | Nominal`.
