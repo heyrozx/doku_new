@@ -58,6 +58,18 @@ Tanpa `key.properties`, build rilis memakai debug key (hanya untuk uji lokal).
   hasil impor lama).
 - File Excel memakai kolom: `Tanggal | Keterangan | Kategori | Jenis | Nominal`.
 
+## Logo & ikon
+
+Sumber logo ada di `docs/branding/logo.svg` (vektor). Turunannya:
+
+- `assets/images/logo.png`: logo di dalam aplikasi dan splash screen
+- `android/app/src/main/res/mipmap-*` dan `drawable-*/ic_launcher_*`: ikon launcher
+  (adaptif + monokrom untuk themed icon Android 13+, plus ikon lama untuk Android 7)
+- `assets/splash/splash_android12.png`: splash Android 12+
+- `docs/branding/play_store_icon.png`: ikon 512×512 untuk Play Console
+
+![Logo sebelum dan sesudah](docs/branding/logo_before_after.png)
+
 ## Tampilan
 
 | Beranda | Mode gelap | Transaksi | Catat transaksi |
