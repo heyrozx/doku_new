@@ -57,3 +57,13 @@ Tanpa `key.properties`, build rilis memakai debug key (hanya untuk uji lokal).
   Database dinaikkan ke versi 2 (menambah index dan merapikan format tanggal
   hasil impor lama).
 - File Excel memakai kolom: `Tanggal | Keterangan | Kategori | Jenis | Nominal`.
+
+## Tampilan
+
+| Beranda | Mode gelap | Transaksi | Catat transaksi |
+|---|---|---|---|
+| ![](docs/screenshots/02_beranda.png) | ![](docs/screenshots/04_beranda_gelap.png) | ![](docs/screenshots/05_transaksi.png) | ![](docs/screenshots/06_catat_transaksi.png) |
+
+| Laporan | Per kategori | Lainnya | Kategori |
+|---|---|---|---|
+| ![](docs/screenshots/07_laporan.png) | ![](docs/screenshots/08_laporan_kategori.png) | ![](docs/screenshots/09_lainnya.png) | ![](docs/screenshots/10_kategori.png) |

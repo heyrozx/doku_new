@@ -58,7 +58,9 @@ class TransactionTile extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            Flexible(
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.42),
               child: AmountText(entry.nominal, entry.type),
             ),
           ],

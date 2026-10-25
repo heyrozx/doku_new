@@ -230,7 +230,7 @@ class _Header extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '$_greeting 👋',
+                  _greeting,
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
@@ -263,6 +263,7 @@ class _BalanceCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(20),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         gradient: AppColors.heroGradient,
         borderRadius: BorderRadius.circular(28),
@@ -275,12 +276,17 @@ class _BalanceCard extends StatelessWidget {
         ],
       ),
       child: Stack(
+        clipBehavior: Clip.none,
         children: [
           Positioned(
-            right: -30,
-            top: -40,
-            child: Icon(Icons.account_balance_wallet_rounded,
-                size: 160, color: onCard.withValues(alpha: 0.08)),
+            right: -60,
+            top: -70,
+            child: _Bubble(size: 180, color: onCard.withValues(alpha: 0.08)),
+          ),
+          Positioned(
+            right: 40,
+            top: 50,
+            child: _Bubble(size: 70, color: onCard.withValues(alpha: 0.06)),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -418,7 +424,7 @@ class _QuickAction extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          TypeIcon(type, size: 38),
+          TypeIcon(type, size: 34),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -427,12 +433,15 @@ class _QuickAction extends StatelessWidget {
                 Text('Tambah',
                     style: theme.textTheme.labelSmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant)),
-                Text(
-                  type.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.w700),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    type.label,
+                    maxLines: 1,
+                    style: theme.textTheme.titleSmall
+                        ?.copyWith(fontWeight: FontWeight.w700),
+                  ),
                 ),
               ],
             ),
@@ -441,4 +450,18 @@ class _QuickAction extends StatelessWidget {
       ),
     );
   }
+}
+
+class _Bubble extends StatelessWidget {
+  const _Bubble({required this.size, required this.color});
+
+  final double size;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      );
 }

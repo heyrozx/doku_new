@@ -147,6 +147,11 @@ class _ReportsPageState extends State<ReportsPage> with ReloadOnDataChange {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SegmentedButton<PeriodType>(
                   showSelectedIcon: false,
+                  style: SegmentedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    textStyle: theme.textTheme.labelLarge,
+                    visualDensity: VisualDensity.compact,
+                  ),
                   segments: [
                     for (final type in PeriodType.values)
                       ButtonSegment(value: type, label: Text(type.label)),

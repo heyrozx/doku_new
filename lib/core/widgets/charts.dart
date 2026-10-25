@@ -48,14 +48,14 @@ class TrendBarChart extends StatelessWidget {
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    reservedSize: 52,
+                    reservedSize: 46,
                     interval: maxY / 4,
                     getTitlesWidget: (value, meta) {
                       if (value == meta.max) return const SizedBox.shrink();
                       return SideTitleWidget(
                         meta: meta,
                         child: Text(
-                          maxValue == 0 ? '' : Money.compact(value),
+                          maxValue == 0 ? '' : Money.axis(value),
                           style: labelStyle,
                         ),
                       );

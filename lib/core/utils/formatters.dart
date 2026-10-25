@@ -15,6 +15,16 @@ abstract final class Money {
   /// `1500000` -> `Rp1,5 jt` (for chart axes and tight spaces).
   static String compact(num value) => _compactRupiah.format(value);
 
+  /// Short label for chart axes: `1500000` -> `1,5 jt`, `250000` -> `250 rb`.
+  static String axis(num value) {
+    final abs = value.abs();
+    String fmt(num v) => NumberFormat('#,##0.#', 'id').format(v);
+    if (abs >= 1e9) return '${fmt(value / 1e9)} M';
+    if (abs >= 1e6) return '${fmt(value / 1e6)} jt';
+    if (abs >= 1e3) return '${fmt(value / 1e3)} rb';
+    return fmt(value);
+  }
+
   /// `1500000` -> `1.500.000`
   static String thousands(num value) => _thousands.format(value);
 
