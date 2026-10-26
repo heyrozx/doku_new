@@ -60,25 +60,25 @@ Tanpa `key.properties`, build rilis memakai debug key (hanya untuk uji lokal).
 
 ## Logo & ikon
 
-Sumber logo ada di `docs/branding/logo.svg` (vektor). Turunannya:
+Sumber logo ada di `store/branding/logo.svg` (vektor). Turunannya:
 
 - `assets/images/logo.png`: logo di dalam aplikasi dan splash screen
 - `android/app/src/main/res/mipmap-*` dan `drawable-*/ic_launcher_*`: ikon launcher
   (adaptif + monokrom untuk themed icon Android 13+, plus ikon lama untuk Android 7)
 - `assets/splash/splash_android12.png`: splash Android 12+
-- `docs/branding/play_store_icon.png`: ikon 512×512 untuk Play Console
-- `docs/play_store/`: aset listing Play Store (ikon, feature graphic, screenshot ponsel)
+- `store/branding/play_store_icon.png`: ikon 512×512 untuk Play Console
+- `store/play_console/`: aset listing Play Store (ikon, feature graphic, screenshot ponsel)
 
 | Logo | Ikon launcher (lingkaran, squircle, monokrom, Android 7) |
 |---|---|
-| ![](docs/branding/logo_1024.png) | ![](docs/branding/launcher_preview.png) |
+| ![](store/branding/logo_1024.png) | ![](store/branding/launcher_preview.png) |
 
 ## Tampilan
 
 | Beranda | Mode gelap | Transaksi | Catat transaksi |
 |---|---|---|---|
-| ![](docs/screenshots/02_beranda.png) | ![](docs/screenshots/04_beranda_gelap.png) | ![](docs/screenshots/05_transaksi.png) | ![](docs/screenshots/06_catat_transaksi.png) |
+| ![](store/app_screenshots/02_beranda.png) | ![](store/app_screenshots/04_beranda_gelap.png) | ![](store/app_screenshots/05_transaksi.png) | ![](store/app_screenshots/06_catat_transaksi.png) |
 
 | Laporan | Per kategori | Lainnya | Kategori |
 |---|---|---|---|
-| ![](docs/screenshots/07_laporan.png) | ![](docs/screenshots/08_laporan_kategori.png) | ![](docs/screenshots/09_lainnya.png) | ![](docs/screenshots/10_kategori.png) |
+| ![](store/app_screenshots/07_laporan.png) | ![](store/app_screenshots/08_laporan_kategori.png) | ![](store/app_screenshots/09_lainnya.png) | ![](store/app_screenshots/10_kategori.png) |
