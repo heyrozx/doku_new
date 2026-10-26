@@ -66,7 +66,10 @@ class _TransactionsPageState extends State<TransactionsPage>
     setState(() => _loadingMore = true);
     final generation = currentLoad;
     final rows = await _repo.list(
-        type: _filter, limit: _pageSize, offset: _items.length);
+      type: _filter,
+      limit: _pageSize,
+      offset: _items.length,
+    );
     if (!isLatestLoad(generation)) {
       if (mounted) setState(() => _loadingMore = false);
       return;
@@ -115,9 +118,7 @@ class _TransactionsPageState extends State<TransactionsPage>
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
             child: Text(
               'Transaksi',
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
+              style: Theme.of(context).textTheme.headlineSmall
                   ?.copyWith(fontWeight: FontWeight.w800),
             ),
           ),
@@ -146,56 +147,55 @@ class _TransactionsPageState extends State<TransactionsPage>
               child: _initialLoad
                   ? const Center(child: CircularProgressIndicator())
                   : groups.isEmpty
-                      ? ListView(
-                          children: const [
-                            EmptyState(
-                              icon: Icons.receipt_long_rounded,
-                              title: 'Belum ada transaksi',
-                              message:
-                                  'Tekan tombol "Catat" untuk menambahkan transaksi pertamamu.',
+                  ? ListView(
+                      children: const [
+                        EmptyState(
+                          icon: Icons.receipt_long_rounded,
+                          title: 'Belum ada transaksi',
+                          message: 'Tekan tombol "Catat" untuk menambahkan transaksi pertamamu.',
+                        ),
+                      ],
+                    )
+                  : ListView.builder(
+                      controller: _scroll,
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.paddingOf(context).bottom + 88,
+                      ),
+                      itemCount: groups.length + (_hasMore ? 1 : 0),
+                      itemBuilder: (context, i) {
+                        if (i >= groups.length) {
+                          return const Padding(
+                            padding: EdgeInsets.all(24),
+                            child: Center(child: CircularProgressIndicator()),
+                          );
+                        }
+                        final group = groups[i];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            TransactionGroupHeader(
+                              group,
+                              onLongPress: () => _deleteDay(group),
+                            ),
+                            SurfaceCard(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: Column(
+                                children: [
+                                  for (final entry in group.items)
+                                    TransactionTile(
+                                      entry,
+                                      onTap: () => TransactionFormScreen.open(
+                                        context,
+                                        entry: entry,
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
                           ],
-                        )
-                      : ListView.builder(
-                          controller: _scroll,
-                          padding: const EdgeInsets.only(bottom: 96),
-                          itemCount: groups.length + (_hasMore ? 1 : 0),
-                          itemBuilder: (context, i) {
-                            if (i >= groups.length) {
-                              return const Padding(
-                                padding: EdgeInsets.all(24),
-                                child: Center(
-                                    child: CircularProgressIndicator()),
-                              );
-                            }
-                            final group = groups[i];
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                TransactionGroupHeader(
-                                  group,
-                                  onLongPress: () => _deleteDay(group),
-                                ),
-                                SurfaceCard(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 4),
-                                  child: Column(
-                                    children: [
-                                      for (final entry in group.items)
-                                        TransactionTile(
-                                          entry,
-                                          onTap: () =>
-                                              TransactionFormScreen.open(
-                                                  context,
-                                                  entry: entry),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
+                        );
+                      },
+                    ),
             ),
           ),
         ],

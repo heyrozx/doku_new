@@ -32,10 +32,12 @@ abstract final class AppColors {
 
 /// Semantic colours that adapt to the current brightness.
 extension AppColorScheme on ColorScheme {
-  Color get income =>
-      brightness == Brightness.light ? AppColors.income : const Color(0xFF4ADE80);
-  Color get expense =>
-      brightness == Brightness.light ? AppColors.expense : const Color(0xFFFB923C);
+  Color get income => brightness == Brightness.light
+      ? AppColors.income
+      : const Color(0xFF4ADE80);
+  Color get expense => brightness == Brightness.light
+      ? AppColors.expense
+      : const Color(0xFFFB923C);
   Color get incomeContainer => income.withValues(alpha: 0.12);
   Color get expenseContainer => expense.withValues(alpha: 0.12);
 }
@@ -46,15 +48,18 @@ abstract final class AppTheme {
 
   static ThemeData _build(Brightness brightness) {
     final isLight = brightness == Brightness.light;
-    final scheme = ColorScheme.fromSeed(
-      seedColor: AppColors.brand,
-      brightness: brightness,
-    ).copyWith(
-      primary: isLight ? AppColors.brandDark : const Color(0xFF34D399),
-      surface: isLight ? const Color(0xFFF6F8F7) : const Color(0xFF101714),
-      surfaceContainerLowest: isLight ? Colors.white : const Color(0xFF151E1A),
-      surfaceContainerLow: isLight ? Colors.white : const Color(0xFF18221E),
-    );
+    final scheme =
+        ColorScheme.fromSeed(
+          seedColor: AppColors.brand,
+          brightness: brightness,
+        ).copyWith(
+          primary: isLight ? AppColors.brandDark : const Color(0xFF34D399),
+          surface: isLight ? const Color(0xFFF6F8F7) : const Color(0xFF101714),
+          surfaceContainerLowest: isLight
+              ? Colors.white
+              : const Color(0xFF151E1A),
+          surfaceContainerLow: isLight ? Colors.white : const Color(0xFF18221E),
+        );
 
     final base = ThemeData(
       useMaterial3: true,
@@ -72,14 +77,17 @@ abstract final class AppTheme {
         surfaceTintColor: Colors.transparent,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        titleTextStyle: textTheme.titleLarge
-            ?.copyWith(fontWeight: FontWeight.w700, color: scheme.onSurface),
+        titleTextStyle: textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: scheme.onSurface,
+        ),
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: isLight ? Brightness.dark : Brightness.light,
           systemNavigationBarColor: scheme.surfaceContainerLowest,
-          systemNavigationBarIconBrightness:
-              isLight ? Brightness.dark : Brightness.light,
+          systemNavigationBarIconBrightness: isLight
+              ? Brightness.dark
+              : Brightness.light,
         ),
       ),
       cardTheme: CardThemeData(
@@ -105,8 +113,10 @@ abstract final class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: scheme.surfaceContainerLowest,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: radius,
           borderSide: BorderSide.none,
@@ -132,8 +142,9 @@ abstract final class AppTheme {
         style: FilledButton.styleFrom(
           minimumSize: const Size.fromHeight(54),
           shape: RoundedRectangleBorder(borderRadius: radius),
-          textStyle:
-              textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+          textStyle: textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(

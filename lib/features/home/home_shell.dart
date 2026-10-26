@@ -35,6 +35,9 @@ class _HomeShellState extends State<HomeShell> {
         if (!didPop) _select(0);
       },
       child: Scaffold(
+        // The floating navigation bar overlays the content; pages add
+        // MediaQuery bottom padding so nothing stays hidden behind it.
+        extendBody: true,
         body: IndexedStack(index: _index, children: pages),
         floatingActionButton: _index < 2
             ? FloatingActionButton.extended(
@@ -43,7 +46,7 @@ class _HomeShellState extends State<HomeShell> {
                 label: const Text('Catat'),
               )
             : null,
-        bottomNavigationBar: NavigationBar(
+        bottomNavigationBar: _FloatingNavBar(
           selectedIndex: _index,
           onDestinationSelected: _select,
           destinations: const [
@@ -68,6 +71,67 @@ class _HomeShellState extends State<HomeShell> {
               label: 'Lainnya',
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FloatingNavBar extends StatelessWidget {
+  const _FloatingNavBar({
+    required this.selectedIndex,
+    required this.onDestinationSelected,
+    required this.destinations,
+  });
+
+  final int selectedIndex;
+  final ValueChanged<int> onDestinationSelected;
+  final List<Widget> destinations;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final radius = BorderRadius.circular(28);
+    final surface = scheme.surface;
+    return DecoratedBox(
+      // Fade the content that scrolls underneath into the page background.
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [surface.withValues(alpha: 0), surface],
+          stops: const [0, 0.55],
+        ),
+      ),
+      child: SafeArea(
+        top: false,
+        minimum: const EdgeInsets.only(bottom: 12),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: radius,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(
+                    alpha: scheme.brightness == Brightness.light ? 0.12 : 0.45,
+                  ),
+                  blurRadius: 28,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: radius,
+              child: NavigationBar(
+                height: 64,
+                backgroundColor: scheme.surfaceContainerLowest,
+                selectedIndex: selectedIndex,
+                onDestinationSelected: onDestinationSelected,
+                destinations: destinations,
+              ),
+            ),
+          ),
         ),
       ),
     );

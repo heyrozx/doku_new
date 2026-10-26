@@ -19,8 +19,7 @@ mixin ReloadOnDataChange<T extends StatefulWidget> on State<T> {
   /// a full reload starts meanwhile.
   int get currentLoad => _loadGeneration;
 
-  bool isLatestLoad(int generation) =>
-      mounted && generation == _loadGeneration;
+  bool isLatestLoad(int generation) => mounted && generation == _loadGeneration;
 
   @override
   void initState() {
@@ -42,7 +41,8 @@ mixin ReloadOnDataChange<T extends StatefulWidget> on State<T> {
   void _run() {
     reload().catchError((Object error, StackTrace stack) {
       FlutterError.reportError(
-          FlutterErrorDetails(exception: error, stack: stack));
+        FlutterErrorDetails(exception: error, stack: stack),
+      );
       if (mounted) context.showSnack('Gagal memuat data.', error: true);
     });
   }
@@ -55,10 +55,12 @@ extension ContextFeedback on BuildContext {
     final scheme = Theme.of(this).colorScheme;
     messenger
       ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(
-        content: Text(message),
-        backgroundColor: error ? scheme.error : null,
-      ));
+      ..showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: error ? scheme.error : null,
+        ),
+      );
   }
 
   /// Asks for confirmation; resolves to `true` only when confirmed.
@@ -112,8 +114,9 @@ class SectionHeader extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: theme.textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w700),
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           if (actionLabel != null)
@@ -159,16 +162,18 @@ class EmptyState extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: theme.textTheme.titleMedium
-                ?.copyWith(fontWeight: FontWeight.w700),
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
           if (message != null) ...[
             const SizedBox(height: 6),
             Text(
               message!,
               textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium
-                  ?.copyWith(color: scheme.onSurfaceVariant),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: scheme.onSurfaceVariant,
+              ),
             ),
           ],
           if (action != null) ...[const SizedBox(height: 20), action!],

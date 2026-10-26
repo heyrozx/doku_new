@@ -59,7 +59,8 @@ class _ImportScreenState extends State<ImportScreen> {
       final messenger = ScaffoldMessenger.of(context);
       Navigator.pop(context);
       messenger.showSnackBar(
-          SnackBar(content: Text('$count transaksi berhasil diimpor.')));
+        SnackBar(content: Text('$count transaksi berhasil diimpor.')),
+      );
     } catch (_) {
       if (mounted) {
         setState(() => _busy = false);
@@ -73,8 +74,7 @@ class _ImportScreenState extends State<ImportScreen> {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final preview = _preview;
-    final total =
-        preview?.rows.fold<int>(0, (sum, r) => sum + r.nominal) ?? 0;
+    final total = preview?.rows.fold<int>(0, (sum, r) => sum + r.nominal) ?? 0;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Impor dari Excel')),
@@ -85,9 +85,12 @@ class _ImportScreenState extends State<ImportScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Format kolom',
-                    style: theme.textTheme.titleSmall
-                        ?.copyWith(fontWeight: FontWeight.w700)),
+                Text(
+                  'Format kolom',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 for (final (i, h) in ExcelService.headers.indexed)
                   Padding(
@@ -97,10 +100,13 @@ class _ImportScreenState extends State<ImportScreen> {
                         CircleAvatar(
                           radius: 12,
                           backgroundColor: scheme.primaryContainer,
-                          child: Text(String.fromCharCode(65 + i),
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                  color: scheme.onPrimaryContainer,
-                                  fontWeight: FontWeight.w700)),
+                          child: Text(
+                            String.fromCharCode(65 + i),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: scheme.onPrimaryContainer,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 10),
                         Text(h, style: theme.textTheme.bodyMedium),
@@ -108,8 +114,9 @@ class _ImportScreenState extends State<ImportScreen> {
                         Expanded(
                           child: Text(
                             _hint(i),
-                            style: theme.textTheme.bodySmall
-                                ?.copyWith(color: scheme.onSurfaceVariant),
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: scheme.onSurfaceVariant,
+                            ),
                           ),
                         ),
                       ],
@@ -119,8 +126,9 @@ class _ImportScreenState extends State<ImportScreen> {
                 Text(
                   'Gunakan file hasil "Unduh Excel" dari menu Laporan sebagai contoh. '
                   'Kategori yang belum ada akan dibuat otomatis.',
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: scheme.onSurfaceVariant),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -152,15 +160,17 @@ class _ImportScreenState extends State<ImportScreen> {
                         _fileName ?? 'Pilih file .xlsx',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleSmall
-                            ?.copyWith(fontWeight: FontWeight.w700),
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       Text(
                         _fileName == null
                             ? 'Ketuk untuk memilih file'
                             : 'Ketuk untuk mengganti file',
-                        style: theme.textTheme.bodySmall
-                            ?.copyWith(color: scheme.onSurfaceVariant),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: scheme.onSurfaceVariant,
+                        ),
                       ),
                     ],
                   ),
@@ -199,15 +209,17 @@ class _ImportScreenState extends State<ImportScreen> {
                         dense: true,
                         title: Text(row.categoryName),
                         subtitle: Text(
-                            '${Dates.long(row.date)} • ${row.type.label}'),
+                          '${Dates.long(row.date)} • ${row.type.label}',
+                        ),
                         trailing: Text(Money.format(row.nominal)),
                       ),
                     if (preview.rows.length > 5)
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: Text(
-                            '+${preview.rows.length - 5} transaksi lainnya',
-                            style: theme.textTheme.bodySmall),
+                          '+${preview.rows.length - 5} transaksi lainnya',
+                          style: theme.textTheme.bodySmall,
+                        ),
                       ),
                   ],
                 ),
@@ -220,15 +232,19 @@ class _ImportScreenState extends State<ImportScreen> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
           child: FilledButton(
-            onPressed: _busy || (preview?.rows.isEmpty ?? true) ? null : _import,
+            onPressed: _busy || (preview?.rows.isEmpty ?? true)
+                ? null
+                : _import,
             child: _busy
                 ? const SizedBox.square(
                     dimension: 22,
                     child: CircularProgressIndicator(strokeWidth: 2.5),
                   )
-                : Text(preview == null || preview.rows.isEmpty
-                    ? 'Impor'
-                    : 'Impor ${preview.rows.length} transaksi'),
+                : Text(
+                    preview == null || preview.rows.isEmpty
+                        ? 'Impor'
+                        : 'Impor ${preview.rows.length} transaksi',
+                  ),
           ),
         ),
       ),
@@ -236,12 +252,12 @@ class _ImportScreenState extends State<ImportScreen> {
   }
 
   static String _hint(int column) => switch (column) {
-        0 => '(2024-12-31 atau 31/12/2024)',
-        1 => '(opsional)',
-        2 => '(nama kategori)',
-        3 => '(income/expense atau Pemasukan/Pengeluaran)',
-        _ => '(angka, contoh 150000)',
-      };
+    0 => '(2024-12-31 atau 31/12/2024)',
+    1 => '(opsional)',
+    2 => '(nama kategori)',
+    3 => '(income/expense atau Pemasukan/Pengeluaran)',
+    _ => '(angka, contoh 150000)',
+  };
 
   Widget _row(ThemeData theme, String label, String value, {Color? color}) {
     return Padding(
@@ -255,8 +271,10 @@ class _ImportScreenState extends State<ImportScreen> {
             child: Text(
               value,
               textAlign: TextAlign.end,
-              style: theme.textTheme.bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.w700, color: color),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: color,
+              ),
             ),
           ),
         ],

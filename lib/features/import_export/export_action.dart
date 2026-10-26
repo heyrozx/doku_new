@@ -7,10 +7,15 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 /// Exports the transactions of [period] to an `.xlsx` file chosen by the user.
-Future<void> exportTransactions(BuildContext context, ReportPeriod period) async {
+Future<void> exportTransactions(
+  BuildContext context,
+  ReportPeriod period,
+) async {
   try {
-    final entries = await TransactionRepository()
-        .list(start: period.startDb, end: period.endDb);
+    final entries = await TransactionRepository().list(
+      start: period.startDb,
+      end: period.endDb,
+    );
     if (!context.mounted) return;
     if (entries.isEmpty) {
       context.showSnack('Tidak ada transaksi untuk diekspor.');

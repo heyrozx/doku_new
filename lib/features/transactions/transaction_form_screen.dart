@@ -26,11 +26,13 @@ class TransactionFormScreen extends StatefulWidget {
     TransactionEntry? entry,
     TransactionType initialType = TransactionType.expense,
   }) {
-    return Navigator.of(context).push(MaterialPageRoute<void>(
-      fullscreenDialog: entry == null,
-      builder: (_) =>
-          TransactionFormScreen(entry: entry, initialType: initialType),
-    ));
+    return Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        fullscreenDialog: entry == null,
+        builder: (_) =>
+            TransactionFormScreen(entry: entry, initialType: initialType),
+      ),
+    );
   }
 
   @override
@@ -45,8 +47,9 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
   late final TextEditingController _amount = TextEditingController(
     text: widget.entry != null ? Money.thousands(widget.entry!.nominal) : '',
   );
-  late final TextEditingController _notes =
-      TextEditingController(text: widget.entry?.notes);
+  late final TextEditingController _notes = TextEditingController(
+    text: widget.entry?.notes,
+  );
 
   late TransactionType _type = widget.entry?.type ?? widget.initialType;
   late DateTime _date = widget.entry?.dateTime ?? Dates.today();
@@ -146,11 +149,15 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
       if (!mounted) return;
       final messenger = ScaffoldMessenger.of(context);
       Navigator.pop(context);
-      messenger.showSnackBar(SnackBar(
-        content: Text(_isEdit
-            ? 'Transaksi diperbarui.'
-            : '${_type.label} ${Money.format(nominal)} tersimpan.'),
-      ));
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(
+            _isEdit
+                ? 'Transaksi diperbarui.'
+                : '${_type.label} ${Money.format(nominal)} tersimpan.',
+          ),
+        ),
+      );
     } catch (_) {
       if (mounted) {
         setState(() => _saving = false);
@@ -218,21 +225,28 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            Text('Jumlah',
-                style: theme.textTheme.labelLarge
-                    ?.copyWith(color: scheme.onSurfaceVariant)),
+            Text(
+              'Jumlah',
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: scheme.onSurfaceVariant,
+              ),
+            ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _amount,
               autofocus: !_isEdit,
               keyboardType: TextInputType.number,
               inputFormatters: [ThousandsInputFormatter()],
-              style: theme.textTheme.headlineMedium
-                  ?.copyWith(fontWeight: FontWeight.w800, color: accent),
+              style: theme.textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: accent,
+              ),
               decoration: InputDecoration(
                 prefixText: 'Rp ',
-                prefixStyle: theme.textTheme.headlineMedium
-                    ?.copyWith(fontWeight: FontWeight.w800, color: accent),
+                prefixStyle: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: accent,
+                ),
                 hintText: '0',
               ),
               validator: (v) {
@@ -247,9 +261,12 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
             Row(
               children: [
                 Expanded(
-                  child: Text('Kategori',
-                      style: theme.textTheme.labelLarge
-                          ?.copyWith(color: scheme.onSurfaceVariant)),
+                  child: Text(
+                    'Kategori',
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: scheme.onSurfaceVariant,
+                    ),
+                  ),
                 ),
                 TextButton.icon(
                   onPressed: _addCategory,
@@ -291,9 +308,12 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
                 ],
               ),
             const SizedBox(height: 24),
-            Text('Tanggal',
-                style: theme.textTheme.labelLarge
-                    ?.copyWith(color: scheme.onSurfaceVariant)),
+            Text(
+              'Tanggal',
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: scheme.onSurfaceVariant,
+              ),
+            ),
             const SizedBox(height: 8),
             Card(
               child: ListTile(
@@ -304,9 +324,12 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            Text('Catatan',
-                style: theme.textTheme.labelLarge
-                    ?.copyWith(color: scheme.onSurfaceVariant)),
+            Text(
+              'Catatan',
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: scheme.onSurfaceVariant,
+              ),
+            ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _notes,
@@ -324,7 +347,11 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
-              20, 8, 20, 12 + MediaQuery.viewInsetsOf(context).bottom),
+            20,
+            8,
+            20,
+            12 + MediaQuery.viewInsetsOf(context).bottom,
+          ),
           child: FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: accent,

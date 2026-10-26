@@ -35,8 +35,9 @@ class _CategoryEditorState extends State<_CategoryEditor> {
   final _formKey = GlobalKey<FormState>();
   final _repo = CategoryRepository();
   late final _name = TextEditingController(text: widget.category?.name);
-  late final _description =
-      TextEditingController(text: widget.category?.description);
+  late final _description = TextEditingController(
+    text: widget.category?.description,
+  );
   late TransactionType _type = widget.initialType;
   bool _saving = false;
 
@@ -66,7 +67,10 @@ class _CategoryEditorState extends State<_CategoryEditor> {
       final current = widget.category;
       if (current == null) {
         saved = await _repo.create(
-            name: name, description: _description.text, type: _type);
+          name: name,
+          description: _description.text,
+          type: _type,
+        );
       } else {
         saved = Category(
           id: current.id,
@@ -90,7 +94,11 @@ class _CategoryEditorState extends State<_CategoryEditor> {
     final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.fromLTRB(
-          20, 0, 20, 20 + MediaQuery.viewInsetsOf(context).bottom),
+        20,
+        0,
+        20,
+        20 + MediaQuery.viewInsetsOf(context).bottom,
+      ),
       child: Form(
         key: _formKey,
         child: Column(
@@ -99,8 +107,9 @@ class _CategoryEditorState extends State<_CategoryEditor> {
           children: [
             Text(
               _isEdit ? 'Ubah Kategori' : 'Kategori Baru',
-              style: theme.textTheme.titleLarge
-                  ?.copyWith(fontWeight: FontWeight.w700),
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
             const SizedBox(height: 20),
             SegmentedButton<TransactionType>(

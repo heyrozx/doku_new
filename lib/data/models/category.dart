@@ -32,14 +32,15 @@ class Category {
   });
 
   factory Category.fromMap(Map<String, Object?> map) => Category(
-        id: map['id'] as int?,
-        name: (map['name'] as String?) ?? '',
-        description: map['description'] as String?,
-        type: TransactionType.tryParse(map['type'] as String?) ??
-            TransactionType.expense,
-        createdAt: map['created_at'] as String?,
-        updatedAt: map['updated_at'] as String?,
-      );
+    id: map['id'] as int?,
+    name: (map['name'] as String?) ?? '',
+    description: map['description'] as String?,
+    type:
+        TransactionType.tryParse(map['type'] as String?) ??
+        TransactionType.expense,
+    createdAt: map['created_at'] as String?,
+    updatedAt: map['updated_at'] as String?,
+  );
 
   final int? id;
   final String name;
@@ -49,13 +50,13 @@ class Category {
   final String? updatedAt;
 
   Map<String, Object?> toMap() => {
-        if (id != null) 'id': id,
-        'name': name,
-        'description': description,
-        'type': type.value,
-        'created_at': createdAt,
-        'updated_at': updatedAt,
-      };
+    if (id != null) 'id': id,
+    'name': name,
+    'description': description,
+    'type': type.value,
+    'created_at': createdAt,
+    'updated_at': updatedAt,
+  };
 
   @override
   bool operator ==(Object other) => other is Category && other.id == id;

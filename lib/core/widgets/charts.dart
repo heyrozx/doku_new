@@ -18,11 +18,14 @@ class TrendBarChart extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final maxValue = points.fold<int>(
-        0, (m, p) => math.max(m, math.max(p.income, p.expense)));
+      0,
+      (m, p) => math.max(m, math.max(p.income, p.expense)),
+    );
     final maxY = maxValue == 0 ? 1.0 : maxValue * 1.2;
     final barWidth = points.length > 8 ? 6.0 : 10.0;
-    final labelStyle =
-        theme.textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant);
+    final labelStyle = theme.textTheme.labelSmall?.copyWith(
+      color: scheme.onSurfaceVariant,
+    );
 
     return Column(
       children: [
@@ -86,13 +89,13 @@ class TrendBarChart extends StatelessWidget {
                   maxContentWidth: 160,
                   getTooltipItem: (group, groupIndex, rod, rodIndex) =>
                       BarTooltipItem(
-                    '${rodIndex == 0 ? 'Masuk' : 'Keluar'}\n${Money.format(rod.toY)}',
-                    TextStyle(
-                      color: scheme.onInverseSurface,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                    ),
-                  ),
+                        '${rodIndex == 0 ? 'Masuk' : 'Keluar'}\n${Money.format(rod.toY)}',
+                        TextStyle(
+                          color: scheme.onInverseSurface,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                      ),
                 ),
               ),
               barGroups: [
@@ -101,9 +104,16 @@ class TrendBarChart extends StatelessWidget {
                     x: i,
                     barsSpace: 3,
                     barRods: [
-                      _rod(points[i].income.toDouble(), scheme.income, barWidth),
-                      _rod(points[i].expense.toDouble(), scheme.expense,
-                          barWidth),
+                      _rod(
+                        points[i].income.toDouble(),
+                        scheme.income,
+                        barWidth,
+                      ),
+                      _rod(
+                        points[i].expense.toDouble(),
+                        scheme.expense,
+                        barWidth,
+                      ),
                     ],
                   ),
               ],
@@ -197,13 +207,17 @@ class CategoryBreakdown extends StatelessWidget {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Total',
-                      style: theme.textTheme.labelMedium
-                          ?.copyWith(color: scheme.onSurfaceVariant)),
+                  Text(
+                    'Total',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: scheme.onSurfaceVariant,
+                    ),
+                  ),
                   Text(
                     Money.compact(sum),
-                    style: theme.textTheme.titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w800),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ],
               ),
@@ -232,22 +246,25 @@ class CategoryBreakdown extends StatelessWidget {
                         items[i].name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodyMedium
-                            ?.copyWith(fontWeight: FontWeight.w600),
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                     Text(
                       Money.format(items[i].total),
-                      style: theme.textTheme.bodyMedium
-                          ?.copyWith(fontWeight: FontWeight.w600),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     SizedBox(
                       width: 52,
                       child: Text(
                         '${(items[i].share * 100).toStringAsFixed(1)}%',
                         textAlign: TextAlign.end,
-                        style: theme.textTheme.labelMedium
-                            ?.copyWith(color: scheme.onSurfaceVariant),
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: scheme.onSurfaceVariant,
+                        ),
                       ),
                     ),
                   ],
@@ -259,8 +276,9 @@ class CategoryBreakdown extends StatelessWidget {
                     value: items[i].share.clamp(0, 1).toDouble(),
                     minHeight: 6,
                     color: AppColors.chartAt(i),
-                    backgroundColor:
-                        scheme.surfaceContainerHighest.withValues(alpha: 0.6),
+                    backgroundColor: scheme.surfaceContainerHighest.withValues(
+                      alpha: 0.6,
+                    ),
                   ),
                 ),
               ],

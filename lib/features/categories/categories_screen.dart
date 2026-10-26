@@ -33,8 +33,10 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   }
 
   Future<void> _add() async {
-    final created = await showCategoryEditor(context,
-        initialType: _tabTypes[_tabs.index]);
+    final created = await showCategoryEditor(
+      context,
+      initialType: _tabTypes[_tabs.index],
+    );
     if (created == null || !mounted) return;
     _tabs.animateTo(_tabTypes.indexOf(created.type));
     context.showSnack('Kategori "${created.name}" ditambahkan.');
@@ -57,7 +59,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       message: used == 0
           ? 'Kategori "${category.name}" akan dihapus.'
           : 'Kategori "${category.name}" dipakai oleh $used transaksi. '
-              'Kategori beserta transaksinya akan dihapus permanen.',
+                'Kategori beserta transaksinya akan dihapus permanen.',
     );
     if (!ok) return;
     await _repo.delete(id);
@@ -72,7 +74,10 @@ class _CategoriesScreenState extends State<CategoriesScreen>
         title: const Text('Kategori'),
         bottom: TabBar(
           controller: _tabs,
-          tabs: const [Tab(text: 'Pengeluaran'), Tab(text: 'Pemasukan')],
+          tabs: const [
+            Tab(text: 'Pengeluaran'),
+            Tab(text: 'Pemasukan'),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -114,13 +119,15 @@ class _CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) {
-      return ListView(children: [
-        EmptyState(
-          icon: Icons.label_outline_rounded,
-          title: 'Belum ada kategori ${type.label.toLowerCase()}',
-          message: 'Tambahkan kategori untuk mengelompokkan transaksimu.',
-        ),
-      ]);
+      return ListView(
+        children: [
+          EmptyState(
+            icon: Icons.label_outline_rounded,
+            title: 'Belum ada kategori ${type.label.toLowerCase()}',
+            message: 'Tambahkan kategori untuk mengelompokkan transaksimu.',
+          ),
+        ],
+      );
     }
     final theme = Theme.of(context);
     return ListView(
@@ -134,18 +141,26 @@ class _CategoryList extends StatelessWidget {
                 ListTile(
                   onTap: () => onEdit(c),
                   leading: TypeIcon(type, size: 40),
-                  title: Text(c.name,
-                      style: theme.textTheme.titleSmall
-                          ?.copyWith(fontWeight: FontWeight.w600)),
+                  title: Text(
+                    c.name,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   subtitle: (c.description ?? '').isEmpty
                       ? null
-                      : Text(c.description!,
-                          maxLines: 1, overflow: TextOverflow.ellipsis),
+                      : Text(
+                          c.description!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                   trailing: IconButton(
                     tooltip: 'Hapus',
                     onPressed: () => onDelete(c),
-                    icon: Icon(Icons.delete_outline_rounded,
-                        color: theme.colorScheme.error),
+                    icon: Icon(
+                      Icons.delete_outline_rounded,
+                      color: theme.colorScheme.error,
+                    ),
                   ),
                 ),
             ],

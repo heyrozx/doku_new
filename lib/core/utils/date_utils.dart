@@ -84,8 +84,11 @@ abstract final class Dates {
       '${idMonths[date.month - 1]} ${date.year}';
 
   /// Monday of the week containing [date].
-  static DateTime startOfWeek(DateTime date) =>
-      DateTime(date.year, date.month, date.day - (date.weekday - DateTime.monday));
+  static DateTime startOfWeek(DateTime date) => DateTime(
+    date.year,
+    date.month,
+    date.day - (date.weekday - DateTime.monday),
+  );
 
   /// Adds whole calendar days (safe across daylight-saving changes).
   static DateTime addDays(DateTime date, int days) =>

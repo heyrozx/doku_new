@@ -10,17 +10,17 @@ class MorePage extends StatelessWidget {
   const MorePage({super.key});
 
   static Future<void> openUrl(BuildContext context, String url) async {
-    final ok = await launchUrl(Uri.parse(url),
-            mode: LaunchMode.externalApplication)
-        .catchError((Object _) => false);
+    final ok = await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    ).catchError((Object _) => false);
     if (!ok && context.mounted) {
       context.showSnack('Tidak dapat membuka tautan.', error: true);
     }
   }
 
   void _push(BuildContext context, Widget screen) {
-    Navigator.of(context)
-        .push(MaterialPageRoute<void>(builder: (_) => screen));
+    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen));
   }
 
   @override
@@ -29,62 +29,71 @@ class MorePage extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: ListView(
-        padding: const EdgeInsets.only(bottom: 32),
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom + 24,
+        ),
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 4),
             child: Text(
               'Lainnya',
-              style: theme.textTheme.headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.w800),
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ),
           const SectionHeader('Kelola'),
-          _Group(children: [
-            _Item(
-              icon: Icons.label_outline_rounded,
-              title: 'Kategori',
-              subtitle: 'Atur kategori pemasukan & pengeluaran',
-              onTap: () => _push(context, const CategoriesScreen()),
-            ),
-            _Item(
-              icon: Icons.upload_file_rounded,
-              title: 'Impor Excel',
-              subtitle: 'Tambahkan transaksi dari file .xlsx',
-              onTap: () => _push(context, const ImportScreen()),
-            ),
-          ]),
+          _Group(
+            children: [
+              _Item(
+                icon: Icons.label_outline_rounded,
+                title: 'Kategori',
+                subtitle: 'Atur kategori pemasukan & pengeluaran',
+                onTap: () => _push(context, const CategoriesScreen()),
+              ),
+              _Item(
+                icon: Icons.upload_file_rounded,
+                title: 'Impor Excel',
+                subtitle: 'Tambahkan transaksi dari file .xlsx',
+                onTap: () => _push(context, const ImportScreen()),
+              ),
+            ],
+          ),
           const SectionHeader('Bantuan'),
-          _Group(children: [
-            _Item(
-              icon: Icons.help_outline_rounded,
-              title: 'FAQ',
-              onTap: () => _push(context, const FaqScreen()),
-            ),
-            _Item(
-              icon: Icons.chat_bubble_outline_rounded,
-              title: 'Kritik & Saran',
-              onTap: () => openUrl(context, AppConstants.feedbackFormUrl),
-            ),
-            _Item(
-              icon: Icons.shield_outlined,
-              title: 'Disclaimer',
-              onTap: () => _push(context, const DisclaimerScreen()),
-            ),
-          ]),
+          _Group(
+            children: [
+              _Item(
+                icon: Icons.help_outline_rounded,
+                title: 'FAQ',
+                onTap: () => _push(context, const FaqScreen()),
+              ),
+              _Item(
+                icon: Icons.chat_bubble_outline_rounded,
+                title: 'Kritik & Saran',
+                onTap: () => openUrl(context, AppConstants.feedbackFormUrl),
+              ),
+              _Item(
+                icon: Icons.shield_outlined,
+                title: 'Disclaimer',
+                onTap: () => _push(context, const DisclaimerScreen()),
+              ),
+            ],
+          ),
           const SectionHeader('Aplikasi'),
-          _Group(children: [
-            _Item(
-              icon: Icons.star_outline_rounded,
-              title: 'Beri Rating & Cek Pembaruan',
-              onTap: () => openUrl(context, AppConstants.playStoreUrl),
-            ),
-            _Item(
-              icon: Icons.info_outline_rounded,
-              title: 'Tentang Aplikasi',
-              onTap: () => _push(context, const AboutScreen()),
-            ),
-          ]),
+          _Group(
+            children: [
+              _Item(
+                icon: Icons.star_outline_rounded,
+                title: 'Beri Rating & Cek Pembaruan',
+                onTap: () => openUrl(context, AppConstants.playStoreUrl),
+              ),
+              _Item(
+                icon: Icons.info_outline_rounded,
+                title: 'Tentang Aplikasi',
+                onTap: () => _push(context, const AboutScreen()),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -131,8 +140,7 @@ class _Item extends StatelessWidget {
         ),
         child: Icon(icon, color: scheme.primary, size: 22),
       ),
-      title: Text(title,
-          style: const TextStyle(fontWeight: FontWeight.w600)),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
       subtitle: subtitle == null ? null : Text(subtitle!),
       trailing: const Icon(Icons.chevron_right_rounded),
     );

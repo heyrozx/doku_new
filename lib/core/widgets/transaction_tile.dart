@@ -41,8 +41,9 @@ class TransactionTile extends StatelessWidget {
                     entry.category?.name ?? '-',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.titleSmall
-                        ?.copyWith(fontWeight: FontWeight.w600),
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   if (subtitle.isNotEmpty) ...[
                     const SizedBox(height: 2),
@@ -50,8 +51,9 @@ class TransactionTile extends StatelessWidget {
                       subtitle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall
-                          ?.copyWith(color: scheme.onSurfaceVariant),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: scheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ],
@@ -60,7 +62,8 @@ class TransactionTile extends StatelessWidget {
             const SizedBox(width: 12),
             ConstrainedBox(
               constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.42),
+                maxWidth: MediaQuery.sizeOf(context).width * 0.42,
+              ),
               child: AmountText(entry.nominal, entry.type),
             ),
           ],

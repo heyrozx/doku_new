@@ -32,7 +32,8 @@ class TransactionEntry {
               id: categoryId,
               name: (map['category_name'] as String?) ?? '',
               description: map['category_description'] as String?,
-              type: TransactionType.tryParse(map['category_type'] as String?) ??
+              type:
+                  TransactionType.tryParse(map['category_type'] as String?) ??
                   TransactionType.expense,
             )
           : null,
@@ -55,14 +56,14 @@ class TransactionEntry {
   DateTime get dateTime => Dates.fromDb(date) ?? Dates.today();
 
   Map<String, Object?> toMap() => {
-        if (id != null) 'id': id,
-        'nominal': nominal,
-        'category_id': categoryId,
-        'date': date,
-        'notes': notes,
-        'created_at': createdAt,
-        'updated_at': updatedAt,
-      };
+    if (id != null) 'id': id,
+    'nominal': nominal,
+    'category_id': categoryId,
+    'date': date,
+    'notes': notes,
+    'created_at': createdAt,
+    'updated_at': updatedAt,
+  };
 }
 
 /// Transactions that share the same date.

@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 
 class CategoryRepository {
   CategoryRepository([AppDatabase? database])
-      : _db = database ?? AppDatabase.instance;
+    : _db = database ?? AppDatabase.instance;
 
   final AppDatabase _db;
 
@@ -23,7 +23,8 @@ class CategoryRepository {
   Future<int> count() async {
     final db = await _db.database;
     return Sqflite.firstIntValue(
-            await db.rawQuery('SELECT COUNT(*) FROM ${Tables.categories}')) ??
+          await db.rawQuery('SELECT COUNT(*) FROM ${Tables.categories}'),
+        ) ??
         0;
   }
 
@@ -83,9 +84,12 @@ class CategoryRepository {
   /// Number of transactions that use the category.
   Future<int> usageCount(int categoryId) async {
     final db = await _db.database;
-    return Sqflite.firstIntValue(await db.rawQuery(
+    return Sqflite.firstIntValue(
+          await db.rawQuery(
             'SELECT COUNT(*) FROM ${Tables.transactions} WHERE category_id = ?',
-            [categoryId])) ??
+            [categoryId],
+          ),
+        ) ??
         0;
   }
 
@@ -94,10 +98,16 @@ class CategoryRepository {
   Future<void> delete(int categoryId) async {
     final db = await _db.database;
     await db.transaction((txn) async {
-      await txn.delete(Tables.transactions,
-          where: 'category_id = ?', whereArgs: [categoryId]);
-      await txn
-          .delete(Tables.categories, where: 'id = ?', whereArgs: [categoryId]);
+      await txn.delete(
+        Tables.transactions,
+        where: 'category_id = ?',
+        whereArgs: [categoryId],
+      );
+      await txn.delete(
+        Tables.categories,
+        where: 'id = ?',
+        whereArgs: [categoryId],
+      );
     });
     _db.notifyChanged();
   }

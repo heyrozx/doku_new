@@ -15,11 +15,12 @@ class DailyTotal {
 
 class TransactionRepository {
   TransactionRepository([AppDatabase? database])
-      : _db = database ?? AppDatabase.instance;
+    : _db = database ?? AppDatabase.instance;
 
   final AppDatabase _db;
 
-  static const _select = '''
+  static const _select =
+      '''
     SELECT t.id, t.date, t.nominal, t.category_id, t.notes, t.created_at,
            t.updated_at, c.name AS category_name, c.type AS category_type,
            c.description AS category_description
@@ -63,7 +64,10 @@ class TransactionRepository {
     final paging = limit != null ? 'LIMIT ? OFFSET ?' : '';
     final rows = await db.rawQuery(
       '$_select $where ORDER BY t.date DESC, t.updated_at DESC, t.id DESC $paging',
-      [...args, if (limit != null) ...[limit, offset]],
+      [
+        ...args,
+        if (limit != null) ...[limit, offset],
+      ],
     );
     return rows.map(TransactionEntry.fromJoinedMap).toList();
   }
@@ -209,16 +213,20 @@ class TransactionRepository {
 
   Future<int> deleteOnDate(String date) async {
     final db = await _db.database;
-    final count = await db
-        .delete(Tables.transactions, where: 'date = ?', whereArgs: [date]);
+    final count = await db.delete(
+      Tables.transactions,
+      where: 'date = ?',
+      whereArgs: [date],
+    );
     _db.notifyChanged();
     return count;
   }
 
   Future<int> count() async {
     final db = await _db.database;
-    return Sqflite.firstIntValue(await db
-            .rawQuery('SELECT COUNT(*) FROM ${Tables.transactions}')) ??
+    return Sqflite.firstIntValue(
+          await db.rawQuery('SELECT COUNT(*) FROM ${Tables.transactions}'),
+        ) ??
         0;
   }
 }

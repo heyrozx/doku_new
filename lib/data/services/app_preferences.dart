@@ -25,7 +25,10 @@ class AppPreferences {
     if (await categories.count() == 0) {
       for (final (name, description, type) in _defaults) {
         await categories.create(
-            name: name, description: description, type: type);
+          name: name,
+          description: description,
+          type: type,
+        );
       }
     }
     await _prefs.setBool(_seededKey, true);

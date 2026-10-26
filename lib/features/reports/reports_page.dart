@@ -120,8 +120,9 @@ class _ReportsPageState extends State<ReportsPage> with ReloadOnDataChange {
                     Expanded(
                       child: Text(
                         'Laporan',
-                        style: theme.textTheme.headlineSmall
-                            ?.copyWith(fontWeight: FontWeight.w800),
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ),
                     _exporting
@@ -129,8 +130,9 @@ class _ReportsPageState extends State<ReportsPage> with ReloadOnDataChange {
                             padding: EdgeInsets.all(12),
                             child: SizedBox.square(
                               dimension: 22,
-                              child:
-                                  CircularProgressIndicator(strokeWidth: 2.5),
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.5,
+                              ),
                             ),
                           )
                         : IconButton.filledTonal(
@@ -170,7 +172,11 @@ class _ReportsPageState extends State<ReportsPage> with ReloadOnDataChange {
               )
             else
               SliverList.list(children: _content(data)),
-            const SliverToBoxAdapter(child: SizedBox(height: 32)),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: MediaQuery.paddingOf(context).bottom + 24,
+              ),
+            ),
           ],
         ),
       ),
@@ -185,16 +191,18 @@ class _ReportsPageState extends State<ReportsPage> with ReloadOnDataChange {
         children: [
           IconButton(
             tooltip: 'Sebelumnya',
-            onPressed:
-                period.canNavigate ? () => _setPeriod(period.previous()) : null,
+            onPressed: period.canNavigate
+                ? () => _setPeriod(period.previous())
+                : null,
             icon: const Icon(Icons.chevron_left_rounded),
           ),
           Expanded(
             child: Text(
               period.label,
               textAlign: TextAlign.center,
-              style: theme.textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w700),
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           IconButton(
@@ -213,8 +221,7 @@ class _ReportsPageState extends State<ReportsPage> with ReloadOnDataChange {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final summary = data.summary;
-    final breakdown =
-        _breakdownType.isIncome ? data.income : data.expense;
+    final breakdown = _breakdownType.isIncome ? data.income : data.expense;
     final groups = TransactionGroup.fromSorted(data.entries);
 
     return [
@@ -250,9 +257,12 @@ class _ReportsPageState extends State<ReportsPage> with ReloadOnDataChange {
             Icon(Icons.account_balance_wallet_outlined, color: scheme.primary),
             const SizedBox(width: 12),
             Expanded(
-              child: Text('Selisih',
-                  style: theme.textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.w600)),
+              child: Text(
+                'Selisih',
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
             Text(
               '${summary.balance >= 0 ? '+' : '-'}${Money.format(summary.balance.abs())}',
@@ -281,9 +291,13 @@ class _ReportsPageState extends State<ReportsPage> with ReloadOnDataChange {
           showSelectedIcon: false,
           segments: const [
             ButtonSegment(
-                value: TransactionType.expense, label: Text('Pengeluaran')),
+              value: TransactionType.expense,
+              label: Text('Pengeluaran'),
+            ),
             ButtonSegment(
-                value: TransactionType.income, label: Text('Pemasukan')),
+              value: TransactionType.income,
+              label: Text('Pemasukan'),
+            ),
           ],
           selected: {_breakdownType},
           onSelectionChanged: (s) => setState(() => _breakdownType = s.first),
@@ -296,8 +310,9 @@ class _ReportsPageState extends State<ReportsPage> with ReloadOnDataChange {
                 child: Text(
                   'Belum ada ${_breakdownType.label.toLowerCase()} pada periode ini.',
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(color: scheme.onSurfaceVariant),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
               )
             : CategoryBreakdown(breakdown),
@@ -364,9 +379,12 @@ class _StatCard extends StatelessWidget {
             children: [
               Icon(icon, size: 16, color: color),
               const SizedBox(width: 6),
-              Text(label,
-                  style: theme.textTheme.labelMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant)),
+              Text(
+                label,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 8),
@@ -375,8 +393,10 @@ class _StatCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               value,
-              style: theme.textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w800, color: color),
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: color,
+              ),
             ),
           ),
         ],

@@ -42,15 +42,21 @@ class ExcelService {
   ExcelService({
     CategoryRepository? categories,
     TransactionRepository? transactions,
-  })  : _categories = categories ?? CategoryRepository(),
-        _transactions = transactions ?? TransactionRepository();
+  }) : _categories = categories ?? CategoryRepository(),
+       _transactions = transactions ?? TransactionRepository();
 
   final CategoryRepository _categories;
   final TransactionRepository _transactions;
 
   static const mimeType =
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-  static const headers = ['Tanggal', 'Keterangan', 'Kategori', 'Jenis', 'Nominal'];
+  static const headers = [
+    'Tanggal',
+    'Keterangan',
+    'Kategori',
+    'Jenis',
+    'Nominal',
+  ];
 
   /// Builds an `.xlsx` workbook from [entries].
   Uint8List buildWorkbook(List<TransactionEntry> entries) {
@@ -95,7 +101,9 @@ class ExcelService {
         if (row != null) {
           rows.add(row);
         } else if (!_isHeader(cells)) {
-          skipped.add(excel.tables.length > 1 ? '${entry.key}:${i + 1}' : '${i + 1}');
+          skipped.add(
+            excel.tables.length > 1 ? '${entry.key}:${i + 1}' : '${i + 1}',
+          );
         }
       }
     }
@@ -113,21 +121,28 @@ class ExcelService {
       final key = '${row.type.value}|${row.categoryName.toLowerCase()}';
       var id = categoryIds[key];
       if (id == null) {
-        final existing =
-            await _categories.findByName(row.categoryName, row.type);
-        id = existing?.id ??
-            (await _categories.create(name: row.categoryName, type: row.type))
-                .id!;
+        final existing = await _categories.findByName(
+          row.categoryName,
+          row.type,
+        );
+        id =
+            existing?.id ??
+            (await _categories.create(
+              name: row.categoryName,
+              type: row.type,
+            )).id!;
         categoryIds[key] = id;
       }
-      entries.add(TransactionEntry(
-        nominal: row.nominal,
-        categoryId: id,
-        date: Dates.toDb(row.date),
-        notes: row.notes,
-        createdAt: now,
-        updatedAt: now,
-      ));
+      entries.add(
+        TransactionEntry(
+          nominal: row.nominal,
+          categoryId: id,
+          date: Dates.toDb(row.date),
+          notes: row.notes,
+          createdAt: now,
+          updatedAt: now,
+        ),
+      );
     }
 
     await _transactions.createMany(entries);
@@ -164,10 +179,10 @@ class ExcelService {
   static String _text(CellValue? value) => value?.toString().trim() ?? '';
 
   static int? _amount(CellValue? value) => switch (value) {
-        IntCellValue(:final value) => value,
-        DoubleCellValue(:final value) => value.round(),
-        _ => Money.parse(_text(value)),
-      };
+    IntCellValue(:final value) => value,
+    DoubleCellValue(:final value) => value.round(),
+    _ => Money.parse(_text(value)),
+  };
 
   static final _textDateFormats = [
     DateFormat('yyyy-MM-dd'),

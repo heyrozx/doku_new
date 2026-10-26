@@ -43,8 +43,7 @@ class _DashboardData {
   final List<CategoryTotal> expenseByCategory;
 }
 
-class _DashboardPageState extends State<DashboardPage>
-    with ReloadOnDataChange {
+class _DashboardPageState extends State<DashboardPage> with ReloadOnDataChange {
   final _repo = TransactionRepository();
   _DashboardData? _data;
   Object? _error;
@@ -61,10 +60,12 @@ class _DashboardPageState extends State<DashboardPage>
         _repo.summary(),
         _repo.summary(start: month.startDb, end: month.endDb),
         _repo.list(limit: 5),
-        _repo.dailyTotals(
-            start: Dates.toDb(trendStart), end: month.endDb),
-        _repo.totalsByCategory(TransactionType.expense,
-            start: month.startDb, end: month.endDb),
+        _repo.dailyTotals(start: Dates.toDb(trendStart), end: month.endDb),
+        _repo.totalsByCategory(
+          TransactionType.expense,
+          start: month.startDb,
+          end: month.endDb,
+        ),
       ]);
       if (!isLatestLoad(generation)) return;
       setState(() {
@@ -74,7 +75,10 @@ class _DashboardPageState extends State<DashboardPage>
           month: results[1] as Summary,
           recent: results[2] as List<TransactionEntry>,
           trend: TrendBuilder.lastMonths(
-              now, 6, results[3] as List<DailyTotal>),
+            now,
+            6,
+            results[3] as List<DailyTotal>,
+          ),
           expenseByCategory: results[4] as List<CategoryTotal>,
         );
       });
@@ -109,7 +113,12 @@ class _DashboardPageState extends State<DashboardPage>
               )
             else
               SliverList.list(children: _content(data)),
-            const SliverToBoxAdapter(child: SizedBox(height: 96)),
+            // Room for the floating navigation bar and the "Catat" button.
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: MediaQuery.paddingOf(context).bottom + 88,
+              ),
+            ),
           ],
         ),
       ),
@@ -128,16 +137,20 @@ class _DashboardPageState extends State<DashboardPage>
             Expanded(
               child: _QuickAction(
                 type: TransactionType.income,
-                onTap: () => TransactionFormScreen.open(context,
-                    initialType: TransactionType.income),
+                onTap: () => TransactionFormScreen.open(
+                  context,
+                  initialType: TransactionType.income,
+                ),
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: _QuickAction(
                 type: TransactionType.expense,
-                onTap: () => TransactionFormScreen.open(context,
-                    initialType: TransactionType.expense),
+                onTap: () => TransactionFormScreen.open(
+                  context,
+                  initialType: TransactionType.expense,
+                ),
               ),
             ),
           ],
@@ -161,8 +174,9 @@ class _DashboardPageState extends State<DashboardPage>
                 child: Text(
                   'Belum ada pengeluaran bulan ini.',
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
               )
             : CategoryBreakdown(data.expenseByCategory, maxItems: 5),
@@ -193,7 +207,8 @@ class _DashboardPageState extends State<DashboardPage>
                 TransactionTile(
                   entry,
                   showDate: true,
-                  onTap: () => TransactionFormScreen.open(context, entry: entry),
+                  onTap: () =>
+                      TransactionFormScreen.open(context, entry: entry),
                 ),
             ],
           ),
@@ -231,13 +246,15 @@ class _Header extends StatelessWidget {
               children: [
                 Text(
                   _greeting,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 Text(
                   'Dompet Saku',
-                  style: theme.textTheme.titleLarge
-                      ?.copyWith(fontWeight: FontWeight.w800),
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ],
             ),
@@ -291,9 +308,12 @@ class _BalanceCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Total Saldo',
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(color: onCard.withValues(alpha: 0.85))),
+              Text(
+                'Total Saldo',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: onCard.withValues(alpha: 0.85),
+                ),
+              ),
               const SizedBox(height: 4),
               FittedBox(
                 fit: BoxFit.scaleDown,
@@ -346,8 +366,9 @@ class _BalanceCard extends StatelessWidget {
                 month.income == 0
                     ? 'Belum ada pemasukan bulan ini'
                     : 'Terpakai ${(ratio * 100).toStringAsFixed(0)}% dari pemasukan bulan ini',
-                style: theme.textTheme.labelMedium
-                    ?.copyWith(color: onCard.withValues(alpha: 0.85)),
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: onCard.withValues(alpha: 0.85),
+                ),
               ),
             ],
           ),
@@ -387,9 +408,12 @@ class _MonthStat extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label,
-                  style: theme.textTheme.labelSmall
-                      ?.copyWith(color: onCard.withValues(alpha: 0.8))),
+              Text(
+                label,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: onCard.withValues(alpha: 0.8),
+                ),
+              ),
               FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerLeft,
@@ -430,17 +454,21 @@ class _QuickAction extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Tambah',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant)),
+                Text(
+                  'Tambah',
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   alignment: Alignment.centerLeft,
                   child: Text(
                     type.label,
                     maxLines: 1,
-                    style: theme.textTheme.titleSmall
-                        ?.copyWith(fontWeight: FontWeight.w700),
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ],
@@ -460,8 +488,8 @@ class _Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      );
+    width: size,
+    height: size,
+    decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+  );
 }

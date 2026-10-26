@@ -21,14 +21,20 @@ Future<void> main() async {
   } catch (error, stack) {
     // The app is still usable without starter categories.
     FlutterError.reportError(
-        FlutterErrorDetails(exception: error, stack: stack));
+      FlutterErrorDetails(exception: error, stack: stack),
+    );
   }
 
-  unawaited(MobileAds.instance.initialize().then((_) {
-    InterstitialAdService.instance.preload();
-  }).catchError((Object error) {
-    debugPrint('MobileAds init failed: $error');
-  }));
+  unawaited(
+    MobileAds.instance
+        .initialize()
+        .then((_) {
+          InterstitialAdService.instance.preload();
+        })
+        .catchError((Object error) {
+          debugPrint('MobileAds init failed: $error');
+        }),
+  );
 
   runApp(DokuApp(showOnboarding: !prefs.hasSeenOnboarding, preferences: prefs));
 }

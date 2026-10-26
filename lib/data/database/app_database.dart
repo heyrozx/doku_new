@@ -43,7 +43,8 @@ class AppDatabase {
   void notifyChanged() => changes.value++;
 
   Future<Database> _open() async {
-    final path = pathOverride ??
+    final path =
+        pathOverride ??
         p.join((await getApplicationDocumentsDirectory()).path, _fileName);
     final factory = factoryOverride ?? databaseFactory;
     return factory.openDatabase(
@@ -93,18 +94,22 @@ class AppDatabase {
       // Older imports could store full ISO timestamps as the date; keep only
       // the `yyyy-MM-dd` part so range queries match them.
       await db.execute(
-          'UPDATE ${Tables.transactions} SET date = substr(date, 1, 10) '
-          'WHERE length(date) > 10');
+        'UPDATE ${Tables.transactions} SET date = substr(date, 1, 10) '
+        'WHERE length(date) > 10',
+      );
       await _createIndexes(db);
     }
   }
 
   Future<void> _createIndexes(Database db) async {
     await db.execute(
-        'CREATE INDEX IF NOT EXISTS idx_transactions_date ON ${Tables.transactions} (date)');
+      'CREATE INDEX IF NOT EXISTS idx_transactions_date ON ${Tables.transactions} (date)',
+    );
     await db.execute(
-        'CREATE INDEX IF NOT EXISTS idx_transactions_category ON ${Tables.transactions} (category_id)');
+      'CREATE INDEX IF NOT EXISTS idx_transactions_category ON ${Tables.transactions} (category_id)',
+    );
     await db.execute(
-        'CREATE INDEX IF NOT EXISTS idx_categories_type ON ${Tables.categories} (type)');
+      'CREATE INDEX IF NOT EXISTS idx_categories_type ON ${Tables.categories} (type)',
+    );
   }
 }

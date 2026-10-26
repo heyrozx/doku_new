@@ -61,16 +61,21 @@ class FaqScreen extends StatelessWidget {
                 children: [
                   for (final (question, answer) in _faqs)
                     ExpansionTile(
-                      title: Text(question,
-                          style: theme.textTheme.titleSmall
-                              ?.copyWith(fontWeight: FontWeight.w600)),
-                      childrenPadding:
-                          const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      title: Text(
+                        question,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                       expandedAlignment: Alignment.centerLeft,
                       children: [
-                        Text(answer,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                                color: theme.colorScheme.onSurfaceVariant)),
+                        Text(
+                          answer,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
                       ],
                     ),
                 ],
@@ -127,19 +132,28 @@ class DisclaimerScreen extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
         children: [
           for (final (title, body) in _sections) ...[
-            Text(title,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w700)),
+            Text(
+              title,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             const SizedBox(height: 6),
-            Text(body,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: muted, height: 1.5)),
+            Text(
+              body,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: muted,
+                height: 1.5,
+              ),
+            ),
             const SizedBox(height: 20),
           ],
           Text(
             'Dengan menggunakan aplikasi DOKU, pengguna dianggap telah membaca, memahami, dan menyetujui disclaimer ini. Kami sarankan untuk membaca disclaimer ini secara berkala untuk memahami perubahan atau tambahan yang mungkin terjadi.',
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: muted, fontStyle: FontStyle.italic),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: muted,
+              fontStyle: FontStyle.italic,
+            ),
           ),
         ],
       ),
@@ -153,8 +167,10 @@ class AboutScreen extends StatelessWidget {
   static const _features = [
     (Icons.swap_vert_rounded, 'Catat pemasukan & pengeluaran'),
     (Icons.label_outline_rounded, 'Kategori yang bisa diatur sendiri'),
-    (Icons.insert_chart_outlined_rounded,
-        'Laporan mingguan, bulanan & tahunan'),
+    (
+      Icons.insert_chart_outlined_rounded,
+      'Laporan mingguan, bulanan & tahunan',
+    ),
     (Icons.pie_chart_outline_rounded, 'Grafik tren & rincian kategori'),
     (Icons.table_view_rounded, 'Ekspor & impor Excel'),
     (Icons.dark_mode_outlined, 'Mode gelap otomatis'),
@@ -172,16 +188,20 @@ class AboutScreen extends StatelessWidget {
           Center(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(24),
-              child:
-                  Image.asset('assets/images/logo.png', width: 96, height: 96),
+              child: Image.asset(
+                'assets/images/logo.png',
+                width: 96,
+                height: 96,
+              ),
             ),
           ),
           const SizedBox(height: 16),
           Text(
             '${AppConstants.appName} — ${AppConstants.appFullName}',
             textAlign: TextAlign.center,
-            style: theme.textTheme.titleLarge
-                ?.copyWith(fontWeight: FontWeight.w800),
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w800,
+            ),
           ),
           const SizedBox(height: 16),
           Text(
@@ -189,7 +209,10 @@ class AboutScreen extends StatelessWidget {
             'mulai dari gaji bulanan, uang saku, dan hadiah, hingga biaya listrik, makan, dan belanja. '
             'Dengan mencatat setiap transaksi, kamu bisa melacak ke mana uangmu pergi dan menjadi lebih hemat.',
             textAlign: TextAlign.center,
-            style: theme.textTheme.bodyMedium?.copyWith(color: muted, height: 1.5),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: muted,
+              height: 1.5,
+            ),
           ),
           const SizedBox(height: 24),
           SurfaceCard(
@@ -207,8 +230,10 @@ class AboutScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           OutlinedButton.icon(
-            onPressed: () =>
-                MorePage.openUrl(context, 'mailto:${AppConstants.supportEmail}'),
+            onPressed: () => MorePage.openUrl(
+              context,
+              'mailto:${AppConstants.supportEmail}',
+            ),
             icon: const Icon(Icons.mail_outline_rounded),
             label: const Text(AppConstants.supportEmail),
           ),

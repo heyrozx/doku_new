@@ -24,10 +24,16 @@ class ReportPeriod {
         return ReportPeriod._(type, start, Dates.addDays(start, 6));
       case PeriodType.monthly:
         return ReportPeriod._(
-            type, DateTime(day.year, day.month), Dates.endOfMonth(day));
+          type,
+          DateTime(day.year, day.month),
+          Dates.endOfMonth(day),
+        );
       case PeriodType.yearly:
         return ReportPeriod._(
-            type, DateTime(day.year), DateTime(day.year, 12, 31));
+          type,
+          DateTime(day.year),
+          DateTime(day.year, 12, 31),
+        );
       case PeriodType.all:
         return const ReportPeriod._(PeriodType.all, null, null);
     }
@@ -46,8 +52,7 @@ class ReportPeriod {
   bool get canNavigate => type != PeriodType.all;
 
   /// Whether the following period would lie entirely in the future.
-  bool get hasNoNext =>
-      end == null || !end!.isBefore(Dates.today());
+  bool get hasNoNext => end == null || !end!.isBefore(Dates.today());
 
   ReportPeriod previous() => _shift(-1);
   ReportPeriod next() => _shift(1);

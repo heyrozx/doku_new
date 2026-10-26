@@ -97,10 +97,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             margin: const EdgeInsets.only(bottom: 32),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              gradient: RadialGradient(colors: [
-                                scheme.primaryContainer,
-                                scheme.surface,
-                              ]),
+                              gradient: RadialGradient(
+                                colors: [
+                                  scheme.primaryContainer,
+                                  scheme.surface,
+                                ],
+                              ),
                             ),
                             padding: const EdgeInsets.all(24),
                             child: Image.asset(image, fit: BoxFit.contain),
@@ -109,15 +111,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Text(
                           title,
                           textAlign: TextAlign.center,
-                          style: theme.textTheme.headlineMedium
-                              ?.copyWith(fontWeight: FontWeight.w800),
+                          style: theme.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                         const SizedBox(height: 12),
                         Text(
                           body,
                           textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyLarge
-                              ?.copyWith(color: scheme.onSurfaceVariant),
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            color: scheme.onSurfaceVariant,
+                          ),
                         ),
                         const SizedBox(height: 24),
                       ],

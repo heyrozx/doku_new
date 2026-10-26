@@ -9,7 +9,10 @@ abstract final class TrendBuilder {
   /// - monthly: one bar per 7-day block (1-7, 8-14, ...)
   /// - yearly: one bar per month
   /// - all: one bar per year present in [days]
-  static List<TrendPoint> forPeriod(ReportPeriod period, List<DailyTotal> days) {
+  static List<TrendPoint> forPeriod(
+    ReportPeriod period,
+    List<DailyTotal> days,
+  ) {
     final start = period.start;
     switch (period.type) {
       case PeriodType.weekly:
@@ -37,26 +40,23 @@ abstract final class TrendBuilder {
         if (days.isEmpty) return const [];
         final firstYear = days.first.date.year;
         final lastYear = days.last.date.year;
-        return _bucket(
-          days,
-          [for (var y = firstYear; y <= lastYear; y++) '$y'],
-          (d) => d.year - firstYear,
-        );
+        return _bucket(days, [
+          for (var y = firstYear; y <= lastYear; y++) '$y',
+        ], (d) => d.year - firstYear);
     }
   }
 
   /// Monthly buckets for the [count] months ending with [lastMonth].
   static List<TrendPoint> lastMonths(
-      DateTime lastMonth, int count, List<DailyTotal> days) {
+    DateTime lastMonth,
+    int count,
+    List<DailyTotal> days,
+  ) {
     final first = DateTime(lastMonth.year, lastMonth.month - count + 1);
-    return _bucket(
-      days,
-      [
-        for (var i = 0; i < count; i++)
-          idMonthsShort[DateTime(first.year, first.month + i).month - 1],
-      ],
-      (d) => (d.year - first.year) * 12 + d.month - first.month,
-    );
+    return _bucket(days, [
+      for (var i = 0; i < count; i++)
+        idMonthsShort[DateTime(first.year, first.month + i).month - 1],
+    ], (d) => (d.year - first.year) * 12 + d.month - first.month);
   }
 
   static List<TrendPoint> _bucket(

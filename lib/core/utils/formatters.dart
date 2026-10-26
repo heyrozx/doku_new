@@ -1,10 +1,16 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-final NumberFormat _rupiah =
-    NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 0);
-final NumberFormat _compactRupiah =
-    NumberFormat.compactCurrency(locale: 'id', symbol: 'Rp', decimalDigits: 0);
+final NumberFormat _rupiah = NumberFormat.currency(
+  locale: 'id',
+  symbol: 'Rp ',
+  decimalDigits: 0,
+);
+final NumberFormat _compactRupiah = NumberFormat.compactCurrency(
+  locale: 'id',
+  symbol: 'Rp',
+  decimalDigits: 0,
+);
 final NumberFormat _thousands = NumberFormat.decimalPattern('id');
 
 /// Formatting helpers for Indonesian Rupiah amounts.
@@ -67,11 +73,15 @@ class ThousandsInputFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     var digits = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
     if (digits.isEmpty) {
       return const TextEditingValue(
-          text: '', selection: TextSelection.collapsed(offset: 0));
+        text: '',
+        selection: TextSelection.collapsed(offset: 0),
+      );
     }
     if (digits.length > maxDigits) return oldValue;
 
