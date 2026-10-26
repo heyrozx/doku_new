@@ -125,6 +125,9 @@ class _FloatingNavBar extends StatelessWidget {
               borderRadius: radius,
               child: NavigationBar(
                 height: 64,
+                // Icons only; labels stay available as tooltips and for
+                // screen readers.
+                labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
                 backgroundColor: scheme.surfaceContainerLowest,
                 selectedIndex: selectedIndex,
                 onDestinationSelected: onDestinationSelected,
