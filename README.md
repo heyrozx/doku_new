@@ -67,8 +67,11 @@ Sumber logo ada di `docs/branding/logo.svg` (vektor). Turunannya:
   (adaptif + monokrom untuk themed icon Android 13+, plus ikon lama untuk Android 7)
 - `assets/splash/splash_android12.png`: splash Android 12+
 - `docs/branding/play_store_icon.png`: ikon 512×512 untuk Play Console
+- `docs/play_store/`: aset listing Play Store (ikon, feature graphic, screenshot ponsel)
 
-![Logo sebelum dan sesudah](docs/branding/logo_before_after.png)
+| Logo | Ikon launcher (lingkaran, squircle, monokrom, Android 7) |
+|---|---|
+| ![](docs/branding/logo_1024.png) | ![](docs/branding/launcher_preview.png) |
 
 ## Tampilan
 
