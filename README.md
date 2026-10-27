@@ -79,6 +79,6 @@ Sumber logo ada di `store/branding/logo.svg` (vektor). Turunannya:
 |---|---|---|---|
 | ![](store/app_screenshots/02_beranda.png) | ![](store/app_screenshots/04_beranda_gelap.png) | ![](store/app_screenshots/05_transaksi.png) | ![](store/app_screenshots/06_catat_transaksi.png) |
 
-| Laporan | Per kategori | Lainnya | Kategori |
+| Laporan | Per kategori | Pengaturan | Kategori |
 |---|---|---|---|
-| ![](store/app_screenshots/07_laporan.png) | ![](store/app_screenshots/08_laporan_kategori.png) | ![](store/app_screenshots/09_lainnya.png) | ![](store/app_screenshots/10_kategori.png) |
+| ![](store/app_screenshots/07_laporan.png) | ![](store/app_screenshots/08_laporan_kategori.png) | ![](store/app_screenshots/09_pengaturan.png) | ![](store/app_screenshots/10_kategori.png) |

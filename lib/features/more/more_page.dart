@@ -1,5 +1,6 @@
 import 'package:doku/core/constants.dart';
 import 'package:doku/core/widgets/common.dart';
+import 'package:doku/data/services/app_preferences.dart';
 import 'package:doku/features/categories/categories_screen.dart';
 import 'package:doku/features/import_export/import_screen.dart';
 import 'package:doku/features/more/info_screens.dart';
@@ -36,12 +37,14 @@ class MorePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 4),
             child: Text(
-              'Lainnya',
+              'Pengaturan',
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w800,
               ),
             ),
           ),
+          const SectionHeader('Tampilan'),
+          const _Group(children: [_DarkModeSwitch()]),
           const SectionHeader('Kelola'),
           _Group(
             children: [
@@ -114,6 +117,40 @@ class _Group extends StatelessWidget {
   }
 }
 
+class _DarkModeSwitch extends StatelessWidget {
+  const _DarkModeSwitch();
+
+  @override
+  Widget build(BuildContext context) {
+    final prefs = AppPreferences.instance;
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: prefs.themeMode,
+      builder: (context, mode, _) {
+        final isDark = switch (mode) {
+          ThemeMode.dark => true,
+          ThemeMode.light => false,
+          ThemeMode.system =>
+            MediaQuery.platformBrightnessOf(context) == Brightness.dark,
+        };
+        return _ItemTile(
+          icon: isDark ? Icons.dark_mode_rounded : Icons.dark_mode_outlined,
+          title: 'Mode Gelap',
+          subtitle: mode == ThemeMode.system
+              ? 'Mengikuti pengaturan perangkat'
+              : null,
+          onTap: () =>
+              prefs.setThemeMode(isDark ? ThemeMode.light : ThemeMode.dark),
+          trailing: Switch(
+            value: isDark,
+            onChanged: (value) =>
+                prefs.setThemeMode(value ? ThemeMode.dark : ThemeMode.light),
+          ),
+        );
+      },
+    );
+  }
+}
+
 class _Item extends StatelessWidget {
   const _Item({
     required this.icon,
@@ -128,8 +165,34 @@ class _Item extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  Widget build(BuildContext context) => _ItemTile(
+    icon: icon,
+    title: title,
+    subtitle: subtitle,
+    onTap: onTap,
+    trailing: const Icon(Icons.chevron_right_rounded),
+  );
+}
+
+class _ItemTile extends StatelessWidget {
+  const _ItemTile({
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    required this.onTap,
+    required this.trailing,
+  });
+
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final VoidCallback onTap;
+  final Widget trailing;
+
+  @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     return ListTile(
       onTap: onTap,
       leading: Container(
@@ -138,11 +201,23 @@ class _Item extends StatelessWidget {
           color: scheme.primaryContainer.withValues(alpha: 0.6),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Icon(icon, color: scheme.primary, size: 22),
+        child: Icon(icon, color: scheme.primary, size: 20),
       ),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-      subtitle: subtitle == null ? null : Text(subtitle!),
-      trailing: const Icon(Icons.chevron_right_rounded),
+      title: Text(
+        title,
+        style: theme.textTheme.bodyMedium?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      subtitle: subtitle == null
+          ? null
+          : Text(
+              subtitle!,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: scheme.onSurfaceVariant,
+              ),
+            ),
+      trailing: trailing,
     );
   }
 }

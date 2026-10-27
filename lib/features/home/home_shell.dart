@@ -43,7 +43,10 @@ class _HomeShellState extends State<HomeShell> {
             ? FloatingActionButton.extended(
                 onPressed: () => TransactionFormScreen.open(context),
                 icon: const Icon(Icons.add_rounded),
-                label: const Text('Catat'),
+                label: const Text(
+                  'Tambah',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
               )
             : null,
         bottomNavigationBar: _FloatingNavBar(
@@ -66,9 +69,9 @@ class _HomeShellState extends State<HomeShell> {
               label: 'Laporan',
             ),
             NavigationDestination(
-              icon: Icon(Icons.grid_view_outlined),
-              selectedIcon: Icon(Icons.grid_view_rounded),
-              label: 'Lainnya',
+              icon: Icon(Icons.settings_outlined),
+              selectedIcon: Icon(Icons.settings_rounded),
+              label: 'Pengaturan',
             ),
           ],
         ),

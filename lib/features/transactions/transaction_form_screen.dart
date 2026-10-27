@@ -189,7 +189,7 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isEdit ? 'Ubah Transaksi' : 'Catat Transaksi'),
+        title: Text(_isEdit ? 'Ubah Transaksi' : 'Tambah Transaksi'),
         actions: [
           if (_isEdit)
             IconButton(
@@ -346,12 +346,8 @@ class _TransactionFormScreenState extends State<TransactionFormScreen> {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            20,
-            8,
-            20,
-            12 + MediaQuery.viewInsetsOf(context).bottom,
-          ),
+          // Stays at the bottom; the keyboard simply covers it while typing.
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
           child: FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: accent,

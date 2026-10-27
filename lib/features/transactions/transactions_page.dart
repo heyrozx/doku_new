@@ -17,7 +17,8 @@ class TransactionsPage extends StatefulWidget {
 
 class _TransactionsPageState extends State<TransactionsPage>
     with ReloadOnDataChange {
-  static const _pageSize = 30;
+  /// Rows fetched per database query (LIMIT/OFFSET pagination).
+  static const _pageSize = 20;
 
   final _repo = TransactionRepository();
   final _scroll = ScrollController();
@@ -44,20 +45,29 @@ class _TransactionsPageState extends State<TransactionsPage>
     if (_scroll.position.extentAfter < 400) _loadMore();
   }
 
-  /// Reloads from the first page, keeping as many rows as are visible.
+  /// Loads the first page again; later pages are fetched while scrolling.
   @override
   Future<void> reload() async {
     final generation = beginLoad();
-    final count = _items.length < _pageSize ? _pageSize : _items.length;
-    final rows = await _repo.list(type: _filter, limit: count);
+    final rows = await _repo.list(type: _filter, limit: _pageSize);
     if (!isLatestLoad(generation)) return;
     setState(() {
       _items
         ..clear()
         ..addAll(rows);
-      _hasMore = rows.length == count;
+      _hasMore = rows.length == _pageSize;
       _initialLoad = false;
       _loadingMore = false;
+    });
+    _fillViewport();
+  }
+
+  /// Fetches another page when the loaded rows do not fill the screen yet,
+  /// since no scroll event would trigger it otherwise.
+  void _fillViewport() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_scroll.hasClients) return;
+      if (_scroll.position.extentAfter < 400) _loadMore();
     });
   }
 
@@ -79,6 +89,7 @@ class _TransactionsPageState extends State<TransactionsPage>
       _hasMore = rows.length == _pageSize;
       _loadingMore = false;
     });
+    _fillViewport();
   }
 
   void _setFilter(TransactionType? type) {
@@ -152,7 +163,7 @@ class _TransactionsPageState extends State<TransactionsPage>
                         EmptyState(
                           icon: Icons.receipt_long_rounded,
                           title: 'Belum ada transaksi',
-                          message: 'Tekan tombol "Catat" untuk menambahkan transaksi pertamamu.',
+                          message: 'Tekan tombol "Tambah" untuk mencatat transaksi pertamamu.',
                         ),
                       ],
                     )

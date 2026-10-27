@@ -18,18 +18,21 @@ class DokuApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: AppConstants.appName,
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
-      locale: const Locale('id', 'ID'),
-      supportedLocales: const [Locale('id', 'ID'), Locale('en', 'US')],
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      home: showOnboarding
-          ? OnboardingScreen(preferences: preferences)
-          : const HomeShell(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: preferences.themeMode,
+      builder: (context, themeMode, _) => MaterialApp(
+        title: AppConstants.appName,
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
+        themeMode: themeMode,
+        locale: const Locale('id', 'ID'),
+        supportedLocales: const [Locale('id', 'ID'), Locale('en', 'US')],
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        home: showOnboarding
+            ? OnboardingScreen(preferences: preferences)
+            : const HomeShell(),
+      ),
     );
   }
 }

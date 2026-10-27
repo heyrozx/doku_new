@@ -13,7 +13,7 @@ class FaqScreen extends StatelessWidget {
     ),
     (
       'Bagaimana cara menggunakan DOKU?',
-      'Tekan tombol "Catat" di halaman Beranda atau Transaksi, pilih jenis transaksi, isi jumlah, kategori, dan tanggal, lalu simpan. Tanpa perlu membuat akun.',
+      'Tekan tombol "Tambah" di halaman Beranda atau Transaksi, pilih jenis transaksi, isi jumlah, kategori, dan tanggal, lalu simpan. Tanpa perlu membuat akun.',
     ),
     (
       'Bagaimana cara mengubah atau menghapus transaksi?',
@@ -29,7 +29,7 @@ class FaqScreen extends StatelessWidget {
     ),
     (
       'Bagaimana cara memindahkan data ke HP lain?',
-      'Unduh laporan "Semua" dalam format Excel dari menu Laporan, lalu buka menu Lainnya > Impor Excel di perangkat baru.',
+      'Unduh laporan "Semua" dalam format Excel dari menu Laporan, lalu buka menu Pengaturan > Impor Excel di perangkat baru.',
     ),
     (
       'Apakah DOKU mengirimkan data saya ke server?',
@@ -173,7 +173,7 @@ class AboutScreen extends StatelessWidget {
     ),
     (Icons.pie_chart_outline_rounded, 'Grafik tren & rincian kategori'),
     (Icons.table_view_rounded, 'Ekspor & impor Excel'),
-    (Icons.dark_mode_outlined, 'Mode gelap otomatis'),
+    (Icons.dark_mode_outlined, 'Mode gelap otomatis atau manual'),
   ];
 
   @override
@@ -228,14 +228,81 @@ class AboutScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 16),
-          OutlinedButton.icon(
-            onPressed: () => MorePage.openUrl(
-              context,
-              'mailto:${AppConstants.supportEmail}',
+          const SizedBox(height: 28),
+          Text(
+            'Dikembangkan oleh',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
             ),
-            icon: const Icon(Icons.mail_outline_rounded),
-            label: const Text(AppConstants.supportEmail),
+          ),
+          const SizedBox(height: 12),
+          SurfaceCard(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppConstants.companyName,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Perusahaan apps & services yang membangun dan '
+                        'mengoperasikan platform digital untuk bisnis dan '
+                        'keseharian.',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: muted,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.location_on_outlined,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text(AppConstants.companyLocation),
+                ),
+                ListTile(
+                  onTap: () =>
+                      MorePage.openUrl(context, AppConstants.companyWebsite),
+                  leading: Icon(
+                    Icons.language_rounded,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text('nexadream.id'),
+                  trailing: const Icon(Icons.open_in_new_rounded, size: 18),
+                ),
+                ListTile(
+                  onTap: () => MorePage.openUrl(
+                    context,
+                    'mailto:${AppConstants.supportEmail}',
+                  ),
+                  leading: Icon(
+                    Icons.mail_outline_rounded,
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: const Text(AppConstants.supportEmail),
+                  trailing: const Icon(Icons.open_in_new_rounded, size: 18),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            '© ${DateTime.now().year} ${AppConstants.companyName}',
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodySmall?.copyWith(color: muted),
           ),
         ],
       ),

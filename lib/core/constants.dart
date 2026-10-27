@@ -9,8 +9,12 @@ abstract final class AppConstants {
   static const playStoreUrl =
       'https://play.google.com/store/apps/details?id=$packageName';
   static const feedbackFormUrl =
-      'https://docs.google.com/forms/d/e/1FAIpQLSeHAksu3qdj64kbieifkzAbQkKKT1HWLs0EZoPkPgV7_Ljrfg/viewform?usp=sf_link';
-  static const supportEmail = 'support@caraguna.com';
+      'https://nexadream.id/product-feedback?product=dompet-saku';
+  static const supportEmail = 'halo@nexadream.id';
+
+  static const companyName = 'PT Nexadream Inovasi Digital';
+  static const companyLocation = 'Jember, Indonesia';
+  static const companyWebsite = 'https://nexadream.id';
 }
 
 /// AdMob unit IDs. Google's public test units are used in debug builds so

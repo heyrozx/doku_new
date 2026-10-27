@@ -113,7 +113,7 @@ class _DashboardPageState extends State<DashboardPage> with ReloadOnDataChange {
               )
             else
               SliverList.list(children: _content(data)),
-            // Room for the floating navigation bar and the "Catat" button.
+            // Room for the floating navigation bar and the "Tambah" button.
             SliverToBoxAdapter(
               child: SizedBox(
                 height: MediaQuery.paddingOf(context).bottom + 88,
@@ -195,7 +195,7 @@ class _DashboardPageState extends State<DashboardPage> with ReloadOnDataChange {
             style: FilledButton.styleFrom(minimumSize: const Size(0, 48)),
             onPressed: () => TransactionFormScreen.open(context),
             icon: const Icon(Icons.add_rounded),
-            label: const Text('Catat transaksi'),
+            label: const Text('Tambah transaksi'),
           ),
         )
       else
@@ -245,13 +245,13 @@ class _Header extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _greeting,
+                  'Dompet Saku',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
                 Text(
-                  'Dompet Saku',
+                  _greeting,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w800,
                   ),
