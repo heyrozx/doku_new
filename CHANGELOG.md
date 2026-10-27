@@ -11,6 +11,7 @@
 * Halaman Transaksi memuat data bertahap per 20 transaksi dari database
 * Kontak dukungan kini halo@nexadream.id
 * Informasi PT Nexadream Inovasi Digital di halaman Tentang
+* Logo di ikon aplikasi sedikit diperbesar
 
 ## 1.2.1 - RELEASED
 
