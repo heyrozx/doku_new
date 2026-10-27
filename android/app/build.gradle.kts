@@ -46,6 +46,10 @@ android {
 
     buildTypes {
         release {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
             // Use the upload keystore when key.properties is present, otherwise fall back
             // to the debug key so `flutter run --release` still works locally.
             signingConfig = if (keystorePropertiesFile.exists()) {
@@ -65,4 +69,10 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Google Mobile Ads pulls in WorkManager 2.7 with Room 2.2, whose R8 rules
+    // are incomplete under R8 full mode. Newer WorkManager ships correct rules.
+    implementation("androidx.work:work-runtime:2.11.2")
 }
