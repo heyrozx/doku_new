@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Flutter: Build App Bundle (release)",
+      "type": "shell",
+      "command": "flutter",
+      "args": ["build", "appbundle", "--release"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "Flutter: Clean & Build App Bundle (release)",
+      "type": "shell",
+      "command": "flutter clean && flutter pub get && flutter build appbundle --release",
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "Flutter: Open App Bundle Output",
+      "type": "shell",
+      "command": "open build/app/outputs/bundle/release/",
+      "problemMatcher": []
+    }
+  ]
+}
